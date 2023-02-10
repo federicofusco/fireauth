@@ -1,18 +1,16 @@
 [package]
-name = "fireauth"
+name = "firebase-auth-sdk"
 version = "0.1.5"
-authors = ["khant <contact@khant.dev>", "Federico Fusco"]
+authors = ["Federico Fusco", "khant <contact@khant.dev>"]
 edition = "2021"
-description = "Firebase authentication for rust."
+description = "Firebase authentication SDK for rust."
 license-file = "LICENSE"
-homepage = "https://github.com/the-robot/fireauth"
-documentation = "https://github.com/the-robot/fireauth"
-repository = "https://github.com/the-robot/fireauth"
+homepage = "https://github.com/federicofusco/firebase-auth-sdk"
+documentation = "https://github.com/federicofusco/firebase-auth-sdk"
+repository = "https://github.com/federicofusco/firebase-auth-sdk"
 readme = "README.md"
 keywords = ["jwt", "firebase", "authentication"]
 categories = ["authentication"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 chrono = { version = "0.4.19", features = ["serde"] }
