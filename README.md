@@ -41,6 +41,7 @@ let auth = fireauth::FireAuth::new(API_KEY);
 4. [Refresh ID Token](#4-refresh-id-token)
 5. [Get User Information](#5-get-user-information)
 6. [Update Email and Password](#6-update-email-and-password)
+7. [Verify ID Token](#7-verify-id-token)
 
 > Don't see what you need? See below for [unsupported features for now](#what-are-not-supported-yet).
 
@@ -194,6 +195,22 @@ pub struct fireauth::api::ProviderUserInfo {
 match auth.change_password(id_token, password, return_secure_token).await {
     Ok(update_user) => ...
     Err(error) => ...
+}
+```
+
+### 7. Verify ID Token
+```rust
+match auth.verify_id_token(id_token).await {
+    Ok(decoded) => ...
+    Err(error) => ...
+}
+
+pub struct fireauth::api::IdTokenClaims {
+    pub exp: u64,
+    pub iat: u64,
+    pub iss: String,
+    pub sub: String,
+    pub auth_time: u64,
 }
 ```
 

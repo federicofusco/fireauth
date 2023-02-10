@@ -1,21 +1,27 @@
-use crate::{error::Error};
-use serde::{Serialize, Deserialize};
 use super::FailResponse;
+use crate::error::Error;
+use serde::{Deserialize, Serialize};
 
 impl crate::FireAuth {
-    pub async fn sign_in_email(&self, email: &str, password: &str, return_secure_token: bool) -> Result<Response, Error> {
+    pub async fn sign_in_email(
+        &self,
+        email: &str,
+        password: &str,
+        return_secure_token: bool,
+    ) -> Result<Response, Error> {
         let url = format!(
             "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={}",
             self.api_key,
         );
 
         let client = reqwest::Client::new();
-        let resp = client.post(&url)
+        let resp = client
+            .post(&url)
             .header("Content-Type", "application/json")
             .json(&SignInPayload {
                 email,
                 password,
-                return_secure_token
+                return_secure_token,
             })
             .send()
             .await?;

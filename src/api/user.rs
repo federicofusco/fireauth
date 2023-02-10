@@ -1,6 +1,6 @@
-use crate::{error::Error};
-use serde::{Serialize, Deserialize};
 use super::FailResponse;
+use crate::error::Error;
+use serde::{Deserialize, Serialize};
 
 impl crate::FireAuth {
     pub async fn get_user_info(&self, id_token: &str) -> Result<User, Error> {
@@ -10,7 +10,8 @@ impl crate::FireAuth {
         );
 
         let client = reqwest::Client::new();
-        let resp = client.post(url)
+        let resp = client
+            .post(url)
             .header("Content-Type", "application/json")
             .json(&UserInfoPayload { id_token })
             .send()
@@ -26,27 +27,41 @@ impl crate::FireAuth {
     }
 
     pub async fn change_email(
-        &self, id_token: &str, email: &str, return_secure_token: bool,
+        &self,
+        id_token: &str,
+        email: &str,
+        return_secure_token: bool,
     ) -> Result<UpdateUser, Error> {
-        self.update_user(id_token, Some(email), None, return_secure_token).await
+        self.update_user(id_token, Some(email), None, return_secure_token)
+            .await
     }
 
     pub async fn change_password(
-        &self, id_token: &str, password: &str, return_secure_token: bool,
+        &self,
+        id_token: &str,
+        password: &str,
+        return_secure_token: bool,
     ) -> Result<UpdateUser, Error> {
-        self.update_user(id_token, None, Some(password), return_secure_token).await
+        self.update_user(id_token, None, Some(password), return_secure_token)
+            .await
     }
 
     pub async fn reset_password(&self, email: &str) -> Result<SendOobCode, Error> {
-        self.send_oob_code("PASSWORD_RESET", None, Some(email)).await
+        self.send_oob_code("PASSWORD_RESET", None, Some(email))
+            .await
     }
 
     pub async fn verify_email(&self, id_token: &str) -> Result<SendOobCode, Error> {
-        self.send_oob_code("VERIFY_EMAIL", Some(id_token), None).await
+        self.send_oob_code("VERIFY_EMAIL", Some(id_token), None)
+            .await
     }
 
     async fn update_user(
-        &self, id_token: &str, email: Option<&str>, password: Option<&str>, return_secure_token: bool,
+        &self,
+        id_token: &str,
+        email: Option<&str>,
+        password: Option<&str>,
+        return_secure_token: bool,
     ) -> Result<UpdateUser, Error> {
         let url = format!(
             "https://identitytoolkit.googleapis.com/v1/accounts:update?key={}",
@@ -54,7 +69,8 @@ impl crate::FireAuth {
         );
 
         let client = reqwest::Client::new();
-        let resp = client.post(url)
+        let resp = client
+            .post(url)
             .header("Content-Type", "application/json")
             .json(&UpdateUserPayload {
                 id_token,
@@ -74,16 +90,26 @@ impl crate::FireAuth {
         Ok(body)
     }
 
-    async fn send_oob_code(&self, request_type: &str, id_token: Option<&str>, email: Option<&str>) -> Result<SendOobCode, Error> {
+    async fn send_oob_code(
+        &self,
+        request_type: &str,
+        id_token: Option<&str>,
+        email: Option<&str>,
+    ) -> Result<SendOobCode, Error> {
         let url = format!(
             "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={}",
             self.api_key,
         );
 
         let client = reqwest::Client::new();
-        let resp = client.post(url)
+        let resp = client
+            .post(url)
             .header("Content-Type", "application/json")
-            .json(&SendOobCodePayload { request_type, id_token, email })
+            .json(&SendOobCodePayload {
+                request_type,
+                id_token,
+                email,
+            })
             .send()
             .await?;
 
@@ -108,7 +134,7 @@ struct UserInfoPayload<'a> {
 #[serde(rename_all = "camelCase")]
 struct UserInfoResponse {
     // kind: String,
-    users: Vec<User>
+    users: Vec<User>,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]

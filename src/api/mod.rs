@@ -1,17 +1,17 @@
-mod sign_up;
 mod sign_in;
-mod user;
+mod sign_up;
 mod token;
+mod user;
 
-pub use sign_in::{Response as SignInResponse};
-pub use sign_up::{Response as SignUpResponse};
-pub use user::{User, UpdateUser, ProviderUserInfo, SendOobCode};
-pub use token::{RefreshIdToken};
+pub use sign_in::Response as SignInResponse;
+pub use sign_up::Response as SignUpResponse;
+pub use token::RefreshIdToken;
+pub use user::{ProviderUserInfo, SendOobCode, UpdateUser, User};
 
 #[derive(Debug, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct FailResponse {
-    error: FailResponseBody
+    error: FailResponseBody,
 }
 
 #[derive(Debug, serde::Deserialize)]
