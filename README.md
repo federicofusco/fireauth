@@ -1,4 +1,4 @@
-<h1 align="center">Fire Auth</h1>  
+<h1 align="center">Firebase Auth SDK</h1>  
 
 
 <p align="center">
@@ -7,7 +7,7 @@
 
 <p align="center"><i>Rust wrapper for Firebase Authentication REST API</i></p>
 <p align="center">
-    <a href="https://crates.io/crates/fireauth/">
+    <a href="https://crates.io/crates/firebase-auth-sdk/">
         <img src="https://img.shields.io/badge/crates.io-v0.1.5-green.svg" alt="WTFPL" />
     </a>
     <a href="http://www.wtfpl.net/">
@@ -19,7 +19,7 @@
 Add the following to Cargo.toml:
 
 ```toml
-fireauth = "0.1.5"
+firebase-auth-sdk = "0.1.5"
 ```
 
 ## How to use
@@ -29,7 +29,7 @@ First you need to get a web `API_KEY` from [firebase project settings](https://c
 ```rust
 let api_key: String = String::from("s6FqaFcRFd...njhB8cCjN7");
 
-let auth = fireauth::FireAuth::new(API_KEY);
+let auth = firebase_auth_sdk::Auth::new(API_KEY);
 ```
 
 <br/>
@@ -60,7 +60,7 @@ match auth.sign_up_email(email, password, return_secure_token).await {
 }
 
 // response structure
-pub struct fireauth::api::SignUpResponse {
+pub struct firebase_auth_sdk::api::SignUpResponse {
     pub id_token: String,
     pub email: String,
     pub refresh_token: String,
@@ -77,7 +77,7 @@ match auth.sign_in_email(email, password, return_secure_token).await {
 }
 
 // response structure
-pub struct fireauth::api::SignInResponse {
+pub struct firebase_auth_sdk::api::SignInResponse {
     pub kind: String,
     pub local_id: String,
     pub email: String,
@@ -98,7 +98,7 @@ match auth.verify_email(id_token).await {
 }
 
 // response structure
-pub struct fireauth::api::SendOobCode {
+pub struct firebase_auth_sdk::api::SendOobCode {
     pub kind: String,
     pub email: String,
 }
@@ -120,7 +120,7 @@ match auth.refresh_id_token(refresh_token).await {
 }
 
 // response structure
-pub struct fireauth::api::RefreshIdToken {
+pub struct firebase_auth_sdk::api::RefreshIdToken {
     pub access_token: String,
     pub expires_in: String,
     pub token_type: String,
@@ -139,7 +139,7 @@ match auth.get_user_info(id_token).await {
 }
 
 // response structure
-pub struct fireauth::api::User {
+pub struct firebase_auth_sdk::api::User {
     pub local_id: String,
     pub email: String,
     pub password_hash: String,
@@ -152,7 +152,7 @@ pub struct fireauth::api::User {
     pub last_refresh_at: String,
 }
 
-pub struct fireauth::api::ProviderUserInfo {
+pub struct firebase_auth_sdk::api::ProviderUserInfo {
     pub provider_id: String,
     pub federated_id: String,
     pub email: String,
@@ -170,7 +170,7 @@ match auth.change_email(id_token, email, return_secure_token).await {
 }
 
 // response structure
-pub struct fireauth::api::UpdateUser {
+pub struct firebase_auth_sdk::api::UpdateUser {
     pub kind: String,
     pub local_id: String,
     pub email: String,
@@ -182,7 +182,7 @@ pub struct fireauth::api::UpdateUser {
     pub expires_in: Option<String>,
 }
 
-pub struct fireauth::api::ProviderUserInfo {
+pub struct firebase_auth_sdk::api::ProviderUserInfo {
     pub provider_id: String,
     pub federated_id: String,
     pub email: String,
@@ -205,7 +205,7 @@ match auth.verify_id_token(id_token).await {
     Err(error) => ...
 }
 
-pub struct fireauth::api::IdTokenClaims {
+pub struct firebase_auth_sdk::api::IdTokenClaims {
     pub exp: u64,
     pub iat: u64,
     pub iss: String,
