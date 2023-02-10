@@ -8,7 +8,7 @@
 <p align="center"><i>Rust wrapper for Firebase Authentication REST API</i></p>
 <p align="center">
     <a href="https://crates.io/crates/firebase-auth-sdk/">
-        <img src="https://img.shields.io/badge/crates.io-v0.1.5-green.svg" alt="WTFPL" />
+        <img src="https://img.shields.io/badge/crates.io-v0.1.5-green.svg" alt="crates.io" />
     </a>
     <a href="http://www.wtfpl.net/">
         <img src="http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png" width="85" height="20" alt="WTFPL" />
