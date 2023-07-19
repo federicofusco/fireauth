@@ -4,10 +4,7 @@ use serde::{Deserialize, Serialize};
 
 impl crate::FireAuth {
     pub async fn get_user_info(&self, id_token: &str) -> Result<User, Error> {
-        let url = format!(
-            "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key={}",
-            self.api_key,
-        );
+        let url = self.toolkit_url("accounts:lookup");
 
         let client = reqwest::Client::new();
         let resp = client
@@ -47,12 +44,20 @@ impl crate::FireAuth {
     }
 
     pub async fn reset_password(&self, email: &str) -> Result<SendOobCode, Error> {
-        self.send_oob_code("PASSWORD_RESET", None, Some(email))
+        let id_token = match self {
+            crate::FireAuth::Cloud { api_key: _ } => None,
+            crate::FireAuth::Emulator(_) => Some(""),
+        };
+        self.send_oob_code("PASSWORD_RESET", id_token, Some(email))
             .await
     }
 
     pub async fn verify_email(&self, id_token: &str) -> Result<SendOobCode, Error> {
-        self.send_oob_code("VERIFY_EMAIL", Some(id_token), None)
+        let email = match self {
+            crate::FireAuth::Cloud { api_key: _ } => None,
+            crate::FireAuth::Emulator(_) => Some(""),
+        };
+        self.send_oob_code("VERIFY_EMAIL", Some(id_token), email)
             .await
     }
 
@@ -63,10 +68,7 @@ impl crate::FireAuth {
         password: Option<&str>,
         return_secure_token: bool,
     ) -> Result<UpdateUser, Error> {
-        let url = format!(
-            "https://identitytoolkit.googleapis.com/v1/accounts:update?key={}",
-            self.api_key,
-        );
+        let url = self.toolkit_url("accounts:update");
 
         let client = reqwest::Client::new();
         let resp = client
@@ -96,10 +98,7 @@ impl crate::FireAuth {
         id_token: Option<&str>,
         email: Option<&str>,
     ) -> Result<SendOobCode, Error> {
-        let url = format!(
-            "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={}",
-            self.api_key,
-        );
+        let url = self.toolkit_url("accounts:sendOobCode");
 
         let client = reqwest::Client::new();
         let resp = client

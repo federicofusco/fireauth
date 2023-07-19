@@ -9,10 +9,7 @@ impl crate::FireAuth {
         password: &str,
         return_secure_token: bool,
     ) -> Result<Response, Error> {
-        let url = format!(
-            "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={}",
-            self.api_key,
-        );
+        let url = self.toolkit_url("accounts:signUp");
 
         let client = reqwest::Client::new();
         let resp = client
