@@ -1,6 +1,6 @@
 [package]
 name = "firebase-auth-sdk"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Federico Fusco", "khant <contact@khant.dev>"]
 edition = "2021"
 description = "Firebase authentication SDK for rust."
@@ -19,3 +19,7 @@ serde = { version = "1.0.136", features = ["derive"] }
 jsonwebtoken = { version = "8.2.0", features = ["use_pem"] }
 serde_json = "1"
 thiserror = "1.0.30"
+base64 = "0.21.2"
+
+[dev-dependencies]
+tokio = { version = "1.29.1", features=["full"]}

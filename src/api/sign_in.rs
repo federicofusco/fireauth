@@ -9,10 +9,7 @@ impl crate::FireAuth {
         password: &str,
         return_secure_token: bool,
     ) -> Result<Response, Error> {
-        let url = format!(
-            "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={}",
-            self.api_key,
-        );
+        let url = self.toolkit_url("accounts:signInWithPassword");
 
         let client = reqwest::Client::new();
         let resp = client
@@ -50,6 +47,7 @@ pub struct Response {
     pub kind: String,
     pub local_id: String,
     pub email: String,
+    #[serde(default = "String::new")] // default for emulator
     pub display_name: String,
     pub id_token: String,
     pub registered: bool,
