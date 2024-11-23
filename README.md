@@ -1,5 +1,4 @@
-<h1 align="center">Firebase Auth SDK</h1>  
-
+<h1 align="center">Firebase Auth SDK</h1>
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/nameshare/fireauth/master/logo.png" width="130" height="180">
@@ -16,6 +15,7 @@
 </p>
 
 ## Installation
+
 Add the following to Cargo.toml:
 
 ```toml
@@ -29,12 +29,13 @@ First you need to get a web `API_KEY` from [firebase project settings](https://c
 ```rust
 let api_key: String = String::from("s6FqaFcRFd...njhB8cCjN7");
 
-let auth = firebase_auth_sdk::Auth::new(API_KEY);
+let auth = firebase_auth_sdk::FireAuth::new(API_KEY);
 ```
 
 <br/>
 
 ## Features
+
 1. [Sign Up (email)](#1-sign-up-email)
 2. [Sign In (email)](#2-sign-in-email)
 3. [Send OOB Code](#3-send-oob-code)
@@ -70,6 +71,7 @@ pub struct firebase_auth_sdk::api::SignUpResponse {
 ```
 
 ### 2. Sign In (email)
+
 ```rust
 match auth.sign_in_email(email, password, return_secure_token).await {
     Ok(response) => ...,
@@ -90,7 +92,9 @@ pub struct firebase_auth_sdk::api::SignInResponse {
 ```
 
 ### 3. Send OOB Code
+
 #### Send verification email
+
 ```rust
 match auth.verify_email(id_token).await {
     Ok(send_oob_code) => ...
@@ -105,6 +109,7 @@ pub struct firebase_auth_sdk::api::SendOobCode {
 ```
 
 #### Send reset password
+
 ```rust
 match auth.reset_password(email).await {
     Ok(send_oob_code) => ...
@@ -113,6 +118,7 @@ match auth.reset_password(email).await {
 ```
 
 ### 4. Refresh ID Token
+
 ```rust
 match auth.refresh_id_token(refresh_token).await {
     Ok(refresh_id_token_response) => ...
@@ -132,6 +138,7 @@ pub struct firebase_auth_sdk::api::RefreshIdToken {
 ```
 
 ### 5. Get User Information
+
 ```rust
 match auth.get_user_info(id_token).await {
     Ok(user) => ...,
@@ -163,6 +170,7 @@ pub struct firebase_auth_sdk::api::ProviderUserInfo {
 ### 6. Update Email and Password
 
 #### Email
+
 ```rust
 match auth.change_email(id_token, email, return_secure_token).await {
     Ok(update_user) => ...
@@ -191,6 +199,7 @@ pub struct firebase_auth_sdk::api::ProviderUserInfo {
 ```
 
 #### Password
+
 ```rust
 match auth.change_password(id_token, password, return_secure_token).await {
     Ok(update_user) => ...
@@ -199,6 +208,7 @@ match auth.change_password(id_token, password, return_secure_token).await {
 ```
 
 ### 7. Verify ID Token
+
 ```rust
 match auth.verify_id_token(id_token).await {
     Ok(decoded) => ...
@@ -219,13 +229,16 @@ pub struct firebase_auth_sdk::api::IdTokenClaims {
 ## What are not supported yet
 
 ### Sign In
+
 - Sign in anonymously
 - Sign in with OAuth credential
 
 ### Password
+
 - Verify password reset code
 - Confirm password reset
 
 ### User
+
 - Update profile
 - Delete account
