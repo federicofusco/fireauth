@@ -58,24 +58,12 @@ impl crate::FireAuth {
         let decoding_key = &DecodingKey::from_rsa_pem(decoding_key.as_bytes())
             .map_err(|_| Error::Token("Failed to parse decoding key!".into()))?;
 
-        // Decodes the ID token
-        let decoded =
+        // Decodes and validates the ID token.
+        Ok(
             decode::<IdTokenClaims>(id_token, decoding_key, &Validation::new(Algorithm::RS256))
                 .map_err(|_| Error::Token("Invalid ID token!".into()))?
-                .claims;
-        let timestamp = jsonwebtoken::get_current_timestamp();
-
-        // Checks if the token is expired
-        if decoded.exp <= timestamp {
-            return Err(Error::Token("Token is expired!".into()));
-        }
-
-        // Checks if the token is valid yet
-        if decoded.iat >= timestamp {
-            return Err(Error::Token("Token isn't valid yet!".into()));
-        }
-
-        Ok(decoded)
+                .claims,
+        )
     }
 }
 
