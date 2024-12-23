@@ -141,8 +141,7 @@ struct UserInfoResponse {
 #[serde(rename_all = "camelCase")]
 pub struct User {
     pub local_id: String,
-    pub email: String,
-    pub email_verified: bool,
+
     pub valid_since: String,
     pub last_login_at: String,
     pub created_at: String,
