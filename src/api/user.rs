@@ -140,6 +140,7 @@ struct UserInfoResponse {
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct User {
+    pub phone_number: String,
     pub local_id: String,
     pub last_login_at: String,
     pub created_at: String,
