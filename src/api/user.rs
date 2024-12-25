@@ -9,7 +9,13 @@ impl crate::FireAuth {
             self.api_key,
         );
 
-        let client = reqwest::Client::new();
+        let cert = include_bytes!("cacert.pem").as_ref();
+        let cert = reqwest::Certificate::from_pem(cert)?;
+
+        let client = reqwest::Client::builder()
+            .add_root_certificate(cert)
+            .build()?;
+
         let resp = client
             .post(url)
             .header("Content-Type", "application/json")
