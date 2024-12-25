@@ -11,6 +11,7 @@ repository = "https://github.com/federicofusco/firebase-auth-sdk"
 readme = "README.md"
 keywords = ["jwt", "firebase", "authentication"]
 categories = ["authentication"]
+reqwest = { version = "0.11.10", features = ["json"] }
 
 [dependencies]
 chrono = { version = "0.4.19", features = ["serde"] }
