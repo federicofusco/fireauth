@@ -100,8 +100,11 @@ impl crate::FireAuth {
             "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key={}",
             self.api_key,
         );
+        let client = reqwest::Client::builder()
+            .danger_accept_invalid_certs(true) // Disable SSL certificate verification
+            .build()?;
 
-        let client = reqwest::Client::new();
+        // let client = reqwest::Client::new();
         let resp = client
             .post(url)
             .header("Content-Type", "application/json")
